@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4191501627860382}
   - component: {fileID: 212258058141065008}
   - component: {fileID: 61135311926691212}
-  - component: {fileID: 50126714353128964}
   - component: {fileID: 114758035846692522}
   m_Layer: 0
   m_Name: Shrimp 2
@@ -74,26 +73,6 @@ Transform:
   m_Father: {fileID: 4191501627860382}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50126714353128964
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1384561540456184}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!61 &61135311926691212
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -155,6 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73ca0f097c19c88468f4a7c87f922d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 1
 --- !u!212 &212258058141065008
 SpriteRenderer:
   m_ObjectHideFlags: 1
