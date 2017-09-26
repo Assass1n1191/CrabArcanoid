@@ -9,6 +9,7 @@ public class FieldController : MonoBehaviour
     public GameObject Block1;
     public GameObject Block2;
 
+    public class ItemInfo
     {
         public Vector2 Position { get; set; }
         public Item Item{ get; set; }
