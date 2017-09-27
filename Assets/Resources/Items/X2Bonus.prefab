@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 61199095280230642}
   - component: {fileID: 114937011798175524}
   m_Layer: 0
-  m_Name: ShrimpPack
+  m_Name: X2Bonus
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

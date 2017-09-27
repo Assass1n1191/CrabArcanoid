@@ -77,7 +77,6 @@ public class Item : MonoBehaviour
             case ItemType.SeaUrchin:
                 GameScreen.Instance.ResetToStart();
                 Destroy();
-                //Ball.Instance.Die();
                 break;
             case ItemType.Clock:
                 Fall();
