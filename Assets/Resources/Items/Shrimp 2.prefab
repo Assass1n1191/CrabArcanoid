@@ -135,6 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
+  SpawnProbability: 30
 --- !u!212 &212258058141065008
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -14,6 +14,8 @@ public enum ItemType
 public class Item : MonoBehaviour 
 {
     public ItemType Type;
+    public float SpawnProbability;
+
     private float groundY = -9f;
     private GameObject _bubble;
 
