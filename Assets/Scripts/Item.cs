@@ -17,6 +17,8 @@ public class Item : MonoBehaviour
     private float groundY = -9f;
     private GameObject _bubble;
 
+    private Vector2 _posInField;
+
 	private void Awake () 
 	{
 		
@@ -31,17 +33,17 @@ public class Item : MonoBehaviour
 	{
 	    //if(Input.GetKeyDown(KeyCode.Q))
      //   {
-     //       OnFieldMove();
+     //       MoveTo();
      //   }
 
      //   if (Input.GetKeyDown(KeyCode.W))
      //   {
-     //       OnFall();
+     //       Fall();
      //   }
 
      //   if (Input.GetKeyDown(KeyCode.E))
      //   {
-     //       OnScoreGained();
+     //       GetScore();
      //   }
     }
 
@@ -62,12 +64,13 @@ public class Item : MonoBehaviour
         }
     }
 
-    public void OnFieldMove()
+    public void MoveDown(float desinationY, int posCount)
     {
-        iTween.MoveTo(gameObject, new Vector2(transform.position.x, transform.position.y - 1), 1f);
+        _posInField.y -= posCount;
+        iTween.MoveTo(gameObject, new Vector2(transform.position.x, desinationY/*transform.position.y - verticalDistance*/), 1f);
     }
 
-    public void OnFall()
+    public void Fall()
     {
         iTween.ColorTo(_bubble, new Color(1f, 1f, 1f, 0f), 0.2f);
         iTween.ScaleTo(_bubble, new Vector3(1.2f, 1.2f, 1.2f), 0.2f);
@@ -77,8 +80,9 @@ public class Item : MonoBehaviour
                                               "easetype", iTween.EaseType.linear*/));
     }
 
-    public void OnScoreGained()
+    public void GetScore()
     {
+        GetComponent<Collider2D>().enabled = false;
         iTween.ColorTo(_bubble, new Color(1f, 1f, 1f, 0f), 0.2f);
         iTween.ScaleTo(_bubble, new Vector3(1.2f, 1.2f, 1.2f), 0.2f);
         iTween.MoveTo(gameObject, iTween.Hash("position", new Vector3(transform.position.x, transform.position.y + 1f, 0f),
@@ -92,6 +96,12 @@ public class Item : MonoBehaviour
 
     public void Destroy()
     {
+        FieldController.Instance.ItemIsDestroyed(_posInField);
         Destroy(gameObject);
+    }
+
+    public void SetUpItemInField(Vector2 posInField)
+    {
+        _posInField = posInField;
     }
 }

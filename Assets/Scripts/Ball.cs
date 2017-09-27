@@ -64,6 +64,11 @@ public class Ball : MonoBehaviour
             case "Right Edge":
                 OnEdgeTouch(xMultiplier: -1f);
                 break;
+            case "Item":
+                collision.GetComponent<Item>().GetScore();
+                OnCrabTouch(collision.transform.position);
+                break;
+
             default:
                 break;
         }
