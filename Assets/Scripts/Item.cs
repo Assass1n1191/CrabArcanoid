@@ -134,7 +134,7 @@ public class Item : MonoBehaviour
                     Destroy(gameObject);
                     break;
                 case ItemType.Clock:
-                    GameScreen.Instance.ChangeTime(5f);
+                    GameScreen.Instance.ChangeTime(5);
                     Destroy(gameObject);
                     break;
             }

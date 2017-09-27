@@ -589,7 +589,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
 --- !u!222 &659310246
@@ -1077,7 +1077,7 @@ GameObject:
   - component: {fileID: 1308406968}
   - component: {fileID: 1308406967}
   m_Layer: 5
-  m_Name: Text Score
+  m_Name: Text Timer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1133,7 +1133,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Score: 0'
+  m_Text: 00
 --- !u!222 &1308406968
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2156,15 +2156,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ui_PanelGameOver: {fileID: 1177104893}
-  ui_Score: {fileID: 1308406967}
+  ui_Timer: {fileID: 1308406967}
   HealthBar:
   - {fileID: 1317106937}
   - {fileID: 1565979034}
   - {fileID: 1909070542}
   - {fileID: 736178302}
   - {fileID: 382771873}
-  Timer: {fileID: 659310245}
+  ui_Score: {fileID: 659310245}
   GameIsStarted: 0
+  GameWasReseted: 0
 --- !u!4 &2078801467 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4216148507134588, guid: 7f1c26a00baab2d45bf000d4898060fd,
