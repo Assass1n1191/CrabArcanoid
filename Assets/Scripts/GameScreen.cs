@@ -10,14 +10,14 @@ public class GameScreen : MonoBehaviour
 
     public Image ui_PanelGameOver;
 
-    public Text ui_Score;
+    public Text ui_Timer;
     public List<HealthHeart> HealthBar;
-    public Image Timer;
+    public Image ui_Score;
     private int _score;
     private int _currentHealth = 5;
 
-    private float _gameDuration = 60f; //in seconds
-
+    private int _gameDuration = 60; //in seconds
+    private int _currentGameTime;
 
     public bool GameIsStarted = false;
     public bool GameWasReseted = false;
@@ -41,16 +41,20 @@ public class GameScreen : MonoBehaviour
 
         if(Input.GetMouseButtonDown(0) && (!GameIsStarted || GameWasReseted))
         {
+            if (!GameWasReseted)
+                StartCoroutine(Timer());
+
             Ball.Instance.InitMoveDirection(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             GameIsStarted = true;
             GameWasReseted = false;
+
         }
 
         if (!GameIsStarted) return;
 
-        Timer.fillAmount -= (1f / _gameDuration) * Time.deltaTime;
-        if (Timer.fillAmount == 0f)
-            GameOver();
+        //Timer.fillAmount -= (1f / _gameDuration) * Time.deltaTime;
+        //if (Timer.fillAmount == 0f)
+        //    GameOver();
     }
 
     public void GameOver()
@@ -88,12 +92,30 @@ public class GameScreen : MonoBehaviour
     public void ChangeScore(int changeAmount)
     {
         _score += changeAmount;
-        ui_Score.text = "Score: " + _score.ToString();
+        ui_Score.fillAmount = _score / 10000f;
+
+        if (_score >= 10000)
+            GameOver();
     }
 
-    public void ChangeTime(float changeAmount)
+    public void ChangeTime(int changeAmount)
     {
-        Timer.fillAmount += 1f / changeAmount;
+        _currentGameTime += changeAmount;
+        ui_Timer.text = _currentGameTime.ToString("00");
+    }
+
+    private IEnumerator Timer()
+    {
+        _currentGameTime = _gameDuration;
+
+        while(_currentGameTime > 0f)
+        {
+            yield return new WaitForSeconds(1f);
+            _currentGameTime -= 1;
+            ui_Timer.text = _currentGameTime.ToString("00");
+        }
+
+        GameOver();
     }
 
     public void Restart()
