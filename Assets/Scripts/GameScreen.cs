@@ -26,7 +26,7 @@ public class GameScreen : MonoBehaviour
 
     private float _scoreMultiplier = 1f;
     private float _scoreMultiplierTimer;
-    private bool _scoreMultiplierIsOn;
+    private bool _isScoreMultiplierOn;
 
     private void Awake () 
 	{
@@ -136,19 +136,19 @@ public class GameScreen : MonoBehaviour
     {
         _scoreMultiplier = multiplier;
         _scoreMultiplierTimer += time;
-        _scoreMultiplierIsOn = true;
+        _isScoreMultiplierOn = true;
         ui_x2Image.gameObject.SetActive(true);
     }
 
     private void MultiplierScoreTimer()
     {
-        if (_scoreMultiplierIsOn)
+        if (_isScoreMultiplierOn)
         {
             _scoreMultiplierTimer -= Time.deltaTime;
             if (_scoreMultiplierTimer <= 0)
             {
                 _scoreMultiplier = 1f;
-                _scoreMultiplierIsOn = false;
+                _isScoreMultiplierOn = false;
                 ui_x2Image.gameObject.SetActive(false);
             }
         }

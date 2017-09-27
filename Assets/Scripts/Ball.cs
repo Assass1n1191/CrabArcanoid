@@ -48,9 +48,10 @@ public class Ball : MonoBehaviour
             case "Item":
                 if (col.GetComponent<Item>().IsOnTheGround) return;
                 col.gameObject.GetComponent<Item>().OnBallHit();
-                OnCrabTouch(col.transform.position);
+                OnItemTouch(col.transform.position);
+                //OnCrabTouch(col.transform.position);
                 break;
-            case "Crab":
+            case "Medusa":
                 OnCrabTouch(col.transform.position);
                 break;
             case "Top Edge":
@@ -91,6 +92,42 @@ public class Ball : MonoBehaviour
     private void OnCrabTouch(Vector2 crabPos)
     {
         _moveDirection = (crabPos - (Vector2)transform.position) * -1f;
+    }
+
+    private void OnItemTouch(Vector3 itemPos)
+    {
+        float xDifference = 0f;
+        float yDifference = 0f;
+
+        xDifference = Mathf.Abs(transform.position.x - itemPos.x);
+        yDifference = Mathf.Abs(transform.position.y - itemPos.y);
+
+        if(xDifference > yDifference) //Left or right side
+        {
+            OnEdgeTouch(xMultiplier: -1f);
+
+            //if (transform.position.x - itemPos.x > 0) //Right
+            //{
+            //    OnEdgeTouch(xMultiplier: -1f);
+            //}
+            //else //Left
+            //{
+            //    OnEdgeTouch(xMultiplier: -1f);
+            //}
+        }
+        else //Top or bot
+        {
+            OnEdgeTouch(yMultiplier: -1);
+
+            //if (transform.position.y - itemPos.y > 0) //Top
+            //{
+            //    OnEdgeTouch(yMultiplier: -1);
+            //}
+            //else //Bot
+            //{
+            //    OnEdgeTouch(yMultiplier: -1);
+            //}
+        }
     }
 
     public void ResetPosition()
