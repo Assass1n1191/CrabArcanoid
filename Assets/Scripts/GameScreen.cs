@@ -13,7 +13,9 @@ public class GameScreen : MonoBehaviour
     public Text ui_Timer;
     public List<HealthHeart> HealthBar;
     public Image ui_Score;
-    private int _score;
+    public Image ui_x2Image;
+
+    private float _score;
     private int _currentHealth = 5;
 
     private int _gameDuration = 60; //in seconds
@@ -22,7 +24,11 @@ public class GameScreen : MonoBehaviour
     public bool GameIsStarted = false;
     public bool GameWasReseted = false;
 
-	private void Awake () 
+    private float _scoreMultiplier = 1f;
+    private float _scoreMultiplierTimer;
+    private bool _scoreMultiplierIsOn;
+
+    private void Awake () 
 	{
         Instance = this;
 	}
@@ -55,6 +61,8 @@ public class GameScreen : MonoBehaviour
         //Timer.fillAmount -= (1f / _gameDuration) * Time.deltaTime;
         //if (Timer.fillAmount == 0f)
         //    GameOver();
+
+        MultiplierScoreTimer();
     }
 
     public void GameOver()
@@ -91,7 +99,7 @@ public class GameScreen : MonoBehaviour
 
     public void ChangeScore(int changeAmount)
     {
-        _score += changeAmount;
+        _score += changeAmount * _scoreMultiplier;
         ui_Score.fillAmount = _score / 10000f;
 
         if (_score >= 10000)
@@ -101,7 +109,7 @@ public class GameScreen : MonoBehaviour
     public void ChangeTime(int changeAmount)
     {
         _currentGameTime += changeAmount;
-        ui_Timer.text = _currentGameTime.ToString("00");
+        ui_Timer.text = "Time: " + _currentGameTime.ToString("00");
     }
 
     private IEnumerator Timer()
@@ -112,7 +120,7 @@ public class GameScreen : MonoBehaviour
         {
             yield return new WaitForSeconds(1f);
             _currentGameTime -= 1;
-            ui_Timer.text = _currentGameTime.ToString("00");
+            ui_Timer.text = "Time: " + _currentGameTime.ToString("00");
         }
 
         GameOver();
@@ -121,5 +129,28 @@ public class GameScreen : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+
+    public void SetMultiplierBonus(float multiplier, float time)
+    {
+        _scoreMultiplier = multiplier;
+        _scoreMultiplierTimer += time;
+        _scoreMultiplierIsOn = true;
+        ui_x2Image.gameObject.SetActive(true);
+    }
+
+    private void MultiplierScoreTimer()
+    {
+        if (_scoreMultiplierIsOn)
+        {
+            _scoreMultiplierTimer -= Time.deltaTime;
+            if (_scoreMultiplierTimer <= 0)
+            {
+                _scoreMultiplier = 1f;
+                _scoreMultiplierIsOn = false;
+                ui_x2Image.gameObject.SetActive(false);
+            }
+        }
     }
 }

@@ -147,7 +147,7 @@ public class Item : MonoBehaviour
                     Destroy(gameObject);
                     break;
                 case ItemType.X2Bonus:
-                    //GameScreen.Instance.SetX2Bonus(10f);
+                    GameScreen.Instance.SetMultiplierBonus(2, 10f);
                     Destroy(gameObject);
                     break;
             }
