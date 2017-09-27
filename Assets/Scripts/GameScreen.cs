@@ -20,19 +20,16 @@ public class GameScreen : MonoBehaviour
 
 
     public bool GameIsStarted = false;
+    public bool GameWasReseted = false;
 
 	private void Awake () 
 	{
         Instance = this;
 	}
 
-	private IEnumerator Start () 
+	private void Start () 
 	{
         Time.timeScale = 1f;
-        yield return new WaitForSeconds(2f);
-
-        Ball.Instance.InitMoveDirection();
-        GameIsStarted = true;
 	}
 	
 	private void Update () 
@@ -40,6 +37,13 @@ public class GameScreen : MonoBehaviour
 		if(Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
+        }
+
+        if(Input.GetMouseButtonDown(0) && (!GameIsStarted || GameWasReseted))
+        {
+            Ball.Instance.InitMoveDirection(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+            GameIsStarted = true;
+            GameWasReseted = false;
         }
 
         if (!GameIsStarted) return;
@@ -55,6 +59,14 @@ public class GameScreen : MonoBehaviour
 
         Time.timeScale = 0f;
         ui_PanelGameOver.gameObject.SetActive(true);
+    }
+
+    public void ResetToStart()
+    {
+        ChangeHealthAmount(-1);
+        Ball.Instance.ResetPosition();
+        Crab.Instance.ResetPosition();
+        GameWasReseted = true;
     }
 
     public void ChangeHealthAmount(int changeValue)

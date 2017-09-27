@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Crab : MonoBehaviour 
 {
-    public float _moveSpeed = 5f;
+    public static Crab Instance;
 
+    public float _moveSpeed = 5f;
     private int _screenCenter;
+    private Vector3 initPos = new Vector3(0f, -9f, 0f);
 
 	private void Awake () 
 	{
-		
+        Instance = this;
 	}
 
 	private void Start () 
@@ -20,7 +22,7 @@ public class Crab : MonoBehaviour
 	
 	private void Update () 
 	{
-        if (!GameScreen.Instance.GameIsStarted) return;
+        if (!GameScreen.Instance.GameIsStarted || GameScreen.Instance.GameWasReseted) return;
 
         float horizontal = 0f;
 
@@ -43,5 +45,10 @@ public class Crab : MonoBehaviour
         if (transform.position.x < -4.5f && horizontal < 0f) horizontal = 0f;
 
         transform.Translate(Vector3.right * horizontal);
+    }
+
+    public void ResetPosition()
+    {
+        transform.position = initPos;
     }
 }
