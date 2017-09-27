@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
+    public static Ball Instance;
+
     public float MoveSpeed = 3f;
     private Vector3 _moveDir = Vector3.zero;
 
@@ -23,7 +25,7 @@ public class Ball : MonoBehaviour
 
 	private void Awake () 
 	{
-		
+        Instance = this;
 	}
 
 	private void Start () 
@@ -33,29 +35,35 @@ public class Ball : MonoBehaviour
 	
 	private void Update () 
 	{
-        if(!GameScreen.Instance.GameIsStarted & Input.GetKeyDown(KeyCode.Space))
-        {
-            InitMoveDirection();
-            GameScreen.Instance.GameIsStarted = true;
-        }
+        //if(!GameScreen.Instance.GameIsStarted & Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    InitMoveDirection();
+        //    GameScreen.Instance.GameIsStarted = true;
+        //}
 
         if (!GameScreen.Instance.GameIsStarted) return;
 
         transform.Translate(_moveDirection * MoveSpeed * Time.deltaTime);
 	}
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        switch(collision.tag)
+        switch(col.tag)
         {
+            case "Item":
+                if (col.GetComponent<Item>().IsOnTheGround) return;
+                col.gameObject.GetComponent<Item>().OnBallHit();
+                OnCrabTouch(col.transform.position);
+                break;
             case "Crab":
-                OnCrabTouch(collision.transform.position);
+                OnCrabTouch(col.transform.position);
                 break;
             case "Top Edge":
                 OnEdgeTouch(yMultiplier : -1);
                 break;
             case "Bottom Edge":
-                OnEdgeTouch(yMultiplier: -1);
+                GameScreen.Instance.GameOver();
+                //OnEdgeTouch(yMultiplier: -1);
                 //You lose
                 break;
             case "Left Edge":
@@ -64,17 +72,12 @@ public class Ball : MonoBehaviour
             case "Right Edge":
                 OnEdgeTouch(xMultiplier: -1f);
                 break;
-            case "Item":
-                collision.GetComponent<Item>().GetScore();
-                OnCrabTouch(collision.transform.position);
-                break;
-
             default:
                 break;
         }
     }
 
-    private void InitMoveDirection()
+    public void InitMoveDirection()
     {
         Vector2 targetDirection;
         float xAxisDirectionRandomize = Random.Range(-2f, 2f);
