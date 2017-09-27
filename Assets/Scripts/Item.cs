@@ -21,6 +21,8 @@ public class Item : MonoBehaviour
 
     private Vector2 _posInField;
 
+    public bool IsOnTheGround = false;
+
 	private void Awake () 
 	{
 		
@@ -54,14 +56,24 @@ public class Item : MonoBehaviour
         switch(Type)
         {
             case ItemType.Shrimp1:
+                GetScore();
+                GameScreen.Instance.ChangeScore(100);
                 break;
             case ItemType.Shrimp2:
+                GetScore();
+                GameScreen.Instance.ChangeScore(200);
                 break;
             case ItemType.Shrimp3:
+                GetScore();
+                GameScreen.Instance.ChangeScore(300);
                 break;
             case ItemType.SeaUrchin:
+                FieldController.Instance.ItemIsDestroyed(_posInField);
+                Fall();
                 break;
             case ItemType.Clock:
+                FieldController.Instance.ItemIsDestroyed(_posInField);
+                Fall();
                 break;
         }
     }
@@ -74,12 +86,16 @@ public class Item : MonoBehaviour
 
     public void Fall()
     {
+        IsOnTheGround = true;
+
         iTween.ColorTo(_bubble, new Color(1f, 1f, 1f, 0f), 0.2f);
         iTween.ScaleTo(_bubble, new Vector3(1.2f, 1.2f, 1.2f), 0.2f);
         iTween.MoveTo(gameObject, iTween.Hash("position", new Vector3(transform.position.x, groundY, 0f),
                                               "delay", 0.1f,
                                               "time", 2f/*,
                                               "easetype", iTween.EaseType.linear*/));
+
+        StartCoroutine(DisappearFromTheGround());
     }
 
     public void GetScore()
@@ -105,5 +121,39 @@ public class Item : MonoBehaviour
     public void SetUpItemInField(Vector2 posInField)
     {
         _posInField = posInField;
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.tag.Equals("Crab"))
+        {
+            switch (Type)
+            {
+                case ItemType.SeaUrchin:
+                    GameScreen.Instance.ChangeHealthAmount(-1);
+                    Destroy(gameObject);
+                    break;
+                case ItemType.Clock:
+                    GameScreen.Instance.ChangeTime(5f);
+                    Destroy(gameObject);
+                    break;
+            }
+        }
+    }
+
+    private IEnumerator DisappearFromTheGround()
+    {
+        yield return new WaitForSeconds(2f);
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+
+        for(int i = 0; i < 2; i++)
+        {
+            sr.color = new Color(1f, 1f, 1f, 0.5f);
+            yield return new WaitForSeconds(1f);
+            sr.color = new Color(1f, 1f, 1f, 1f);
+            yield return new WaitForSeconds(1f);
+        }
+
+        Destroy(gameObject);
     }
 }
