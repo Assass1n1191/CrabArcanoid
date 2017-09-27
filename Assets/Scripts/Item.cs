@@ -7,8 +7,10 @@ public enum ItemType
     Shrimp1,
     Shrimp2,
     Shrimp3,
+    ShrimpPack,
     SeaUrchin,
-    Clock
+    Clock,
+    X2Bonus
 }
 
 public class Item : MonoBehaviour 
@@ -53,7 +55,8 @@ public class Item : MonoBehaviour
 
     public void OnBallHit()
     {
-        switch(Type)
+        FieldController.Instance.ItemIsDestroyed(_posInField);
+        switch (Type)
         {
             case ItemType.Shrimp1:
                 GetScore();
@@ -67,12 +70,18 @@ public class Item : MonoBehaviour
                 GetScore();
                 GameScreen.Instance.ChangeScore(300);
                 break;
+            case ItemType.ShrimpPack:
+                GetScore();
+                GameScreen.Instance.ChangeScore(500);
+                break;
             case ItemType.SeaUrchin:
-                FieldController.Instance.ItemIsDestroyed(_posInField);
-                Fall();
+                GameScreen.Instance.ResetToStart();
+                Destroy();
                 break;
             case ItemType.Clock:
-                FieldController.Instance.ItemIsDestroyed(_posInField);
+                Fall();
+                break;
+            case ItemType.X2Bonus:
                 Fall();
                 break;
         }
@@ -114,7 +123,7 @@ public class Item : MonoBehaviour
 
     public void Destroy()
     {
-        FieldController.Instance.ItemIsDestroyed(_posInField);
+        //FieldController.Instance.ItemIsDestroyed(_posInField);
         Destroy(gameObject);
     }
 
@@ -129,12 +138,16 @@ public class Item : MonoBehaviour
         {
             switch (Type)
             {
-                case ItemType.SeaUrchin:
-                    GameScreen.Instance.ChangeHealthAmount(-1);
-                    Destroy(gameObject);
-                    break;
+                //case ItemType.SeaUrchin:
+                //    GameScreen.Instance.ChangeHealthAmount(-1);
+                //    Destroy(gameObject);
+                //    break;
                 case ItemType.Clock:
                     GameScreen.Instance.ChangeTime(5);
+                    Destroy(gameObject);
+                    break;
+                case ItemType.X2Bonus:
+                    //GameScreen.Instance.SetX2Bonus(10f);
                     Destroy(gameObject);
                     break;
             }
