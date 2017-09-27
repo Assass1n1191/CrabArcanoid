@@ -10,6 +10,7 @@ TagManager:
   - Right Edge
   - Crab
   - Item
+  - Medusa
   layers:
   - Default
   - TransparentFX
