@@ -101,8 +101,8 @@ public class Item : MonoBehaviour
         iTween.ScaleTo(_bubble, new Vector3(1.2f, 1.2f, 1.2f), 0.2f);
         iTween.MoveTo(gameObject, iTween.Hash("position", new Vector3(transform.position.x, groundY, 0f),
                                               "delay", 0.1f,
-                                              "time", 2f/*,
-                                              "easetype", iTween.EaseType.linear*/));
+                                              "speed", 3.2f,
+                                              "easetype", iTween.EaseType.linear));
 
         StartCoroutine(DisappearFromTheGround());
     }
