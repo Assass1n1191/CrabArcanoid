@@ -12,6 +12,7 @@ public class GameScreen : MonoBehaviour
 
     public Text ui_Timer;
     public List<HealthHeart> HealthBar;
+    public List<GameObject> Stars;
     public Image ui_Score;
     public Image ui_x2Image;
 
@@ -53,7 +54,6 @@ public class GameScreen : MonoBehaviour
             Ball.Instance.InitMoveDirection(Camera.main.ScreenToWorldPoint(Input.mousePosition));
             GameIsStarted = true;
             GameWasReseted = false;
-
         }
 
         if (!GameIsStarted) return;
@@ -68,6 +68,13 @@ public class GameScreen : MonoBehaviour
     public void GameOver()
     {
         GameIsStarted = false;
+
+        if(ui_Score.fillAmount > 0.33f)
+            Stars[0].SetActive(true);
+        if (ui_Score.fillAmount > 0.66f)
+            Stars[1].SetActive(true);
+        if (ui_Score.fillAmount > 0.99f)
+            Stars[2].SetActive(true);
 
         Time.timeScale = 0f;
         ui_PanelGameOver.gameObject.SetActive(true);
