@@ -10,6 +10,9 @@ public class Ball : MonoBehaviour
     public float MoveSpeed = 3f;
     private Vector3 _moveDir = Vector3.zero;
 
+    private bool _isBallInteractive = true;
+    private float _noninteractivityDuration = 0.1f;
+
     private Vector3 _moveDirection
     {
         get
@@ -46,10 +49,12 @@ public class Ball : MonoBehaviour
         switch(col.tag)
         {
             case "Item":
+                if (!_isBallInteractive) return;
+
                 if (col.GetComponent<Item>().IsOnTheGround) return;
                 col.gameObject.GetComponent<Item>().OnBallHit();
                 OnItemTouch(col.transform.position);
-                //OnCrabTouch(col.transform.position);
+                StartCoroutine(MakeBallNoninteractive());
                 break;
             case "Medusa":
                 OnCrabTouch(col.transform.position);
@@ -59,8 +64,6 @@ public class Ball : MonoBehaviour
                 break;
             case "Bottom Edge":
                 GameScreen.Instance.ResetToStart();
-                //OnEdgeTouch(yMultiplier: -1);
-                //You lose
                 break;
             case "Left Edge":
                 OnEdgeTouch(xMultiplier : -1f);
@@ -75,12 +78,6 @@ public class Ball : MonoBehaviour
 
     public void InitMoveDirection(Vector2 targetDirection)
     {
-        //Vector2 targetDirection;
-        //float xAxisDirectionRandomize = Random.Range(-2f, 2f);
-        //float yAxisDirectionRandomize = Random.Range(transform.position.y, transform.position.y + 2f);
-
-        //targetDirection = new Vector2(xAxisDirectionRandomize, yAxisDirectionRandomize);
-
         _moveDirection = targetDirection - (Vector2)transform.position;
     }
 
@@ -105,28 +102,10 @@ public class Ball : MonoBehaviour
         if(xDifference > yDifference) //Left or right side
         {
             OnEdgeTouch(xMultiplier: -1f);
-
-            //if (transform.position.x - itemPos.x > 0) //Right
-            //{
-            //    OnEdgeTouch(xMultiplier: -1f);
-            //}
-            //else //Left
-            //{
-            //    OnEdgeTouch(xMultiplier: -1f);
-            //}
         }
         else //Top or bot
         {
             OnEdgeTouch(yMultiplier: -1);
-
-            //if (transform.position.y - itemPos.y > 0) //Top
-            //{
-            //    OnEdgeTouch(yMultiplier: -1);
-            //}
-            //else //Bot
-            //{
-            //    OnEdgeTouch(yMultiplier: -1);
-            //}
         }
     }
 
@@ -134,5 +113,12 @@ public class Ball : MonoBehaviour
     {
         transform.position = initPos;
         _moveDirection = Vector3.zero;
+    }
+
+    private IEnumerator MakeBallNoninteractive()
+    {
+        _isBallInteractive = false;
+        yield return new WaitForSeconds(_noninteractivityDuration);
+        _isBallInteractive = true;
     }
 }
