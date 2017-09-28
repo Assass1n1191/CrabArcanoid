@@ -10,13 +10,15 @@ public enum ItemType
     ShrimpPack,
     SeaUrchin,
     Clock,
-    X2Bonus
+    X2Bonus,
+    Shark
 }
 
 public class Item : MonoBehaviour 
 {
     public ItemType Type;
     public float SpawnProbability;
+    public float Score;
 
     private float groundY = -9f;
     private GameObject _bubble;
@@ -60,19 +62,18 @@ public class Item : MonoBehaviour
         {
             case ItemType.Shrimp1:
                 GetScore();
-                GameScreen.Instance.ChangeScore(100);
                 break;
             case ItemType.Shrimp2:
                 GetScore();
-                GameScreen.Instance.ChangeScore(200);
                 break;
             case ItemType.Shrimp3:
                 GetScore();
-                GameScreen.Instance.ChangeScore(300);
                 break;
             case ItemType.ShrimpPack:
                 GetScore();
-                GameScreen.Instance.ChangeScore(500);
+                break;
+            case ItemType.Shark:
+                GetScore();
                 break;
             case ItemType.SeaUrchin:
                 GameScreen.Instance.ResetToStart();
@@ -110,6 +111,8 @@ public class Item : MonoBehaviour
     public void GetScore()
     {
         GetComponent<Collider2D>().enabled = false;
+        GameScreen.Instance.ChangeScore(Score);
+
         iTween.ColorTo(_bubble, new Color(1f, 1f, 1f, 0f), 0.2f);
         iTween.ScaleTo(_bubble, new Vector3(1.2f, 1.2f, 1.2f), 0.2f);
         iTween.MoveTo(gameObject, iTween.Hash("position", new Vector3(transform.position.x, transform.position.y + 1f, 0f),

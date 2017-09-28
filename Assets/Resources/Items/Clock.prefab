@@ -136,6 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Type: 5
   SpawnProbability: 7
+  Score: 0
   IsOnTheGround: 0
 --- !u!212 &212433462475451296
 SpriteRenderer:

@@ -104,7 +104,7 @@ public class GameScreen : MonoBehaviour
         }
     }
 
-    public void ChangeScore(int changeAmount)
+    public void ChangeScore(float changeAmount)
     {
         _score += changeAmount * _scoreMultiplier;
         ui_Score.fillAmount = _score / 10000f;

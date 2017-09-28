@@ -163,8 +163,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73ca0f097c19c88468f4a7c87f922d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Type: 2
+  Type: 7
   SpawnProbability: 40
+  Score: 150
   IsOnTheGround: 0
 --- !u!212 &212106108628161896
 SpriteRenderer:
