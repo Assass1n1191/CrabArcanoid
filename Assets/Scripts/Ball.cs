@@ -46,9 +46,10 @@ public class Ball : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
+        
         switch(col.tag)
         {
-            case "Item":
+            case Tags.Item:
                 if (!_isBallInteractive) return;
 
                 if (col.GetComponent<Item>().IsOnTheGround) return;
@@ -56,19 +57,19 @@ public class Ball : MonoBehaviour
                 OnItemTouch(col.transform.position);
                 StartCoroutine(MakeBallNoninteractive());
                 break;
-            case "Medusa":
+            case Tags.Medusa:
                 OnCrabTouch(col.transform.position);
                 break;
-            case "Top Edge":
+            case Tags.TopEdge:
                 OnEdgeTouch(yMultiplier : -1);
                 break;
-            case "Bottom Edge":
-                GameScreen.Instance.ResetToStart();
+            case Tags.BottonEdge:
+                GameScreen.Instance.ResetToInitState();
                 break;
-            case "Left Edge":
+            case Tags.LeftEdge:
                 OnEdgeTouch(xMultiplier : -1f);
                 break;
-            case "Right Edge":
+            case Tags.RightEdge:
                 OnEdgeTouch(xMultiplier: -1f);
                 break;
             default:

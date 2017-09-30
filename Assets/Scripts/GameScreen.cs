@@ -17,6 +17,7 @@ public class GameScreen : MonoBehaviour
     public Image ui_x2Image;
 
     private float _score;
+    private int _winScore = 10000;
     private int _currentHealth = 5;
 
     private int _gameDuration = 60; //in seconds
@@ -58,10 +59,6 @@ public class GameScreen : MonoBehaviour
 
         if (!GameIsStarted) return;
 
-        //Timer.fillAmount -= (1f / _gameDuration) * Time.deltaTime;
-        //if (Timer.fillAmount == 0f)
-        //    GameOver();
-
         MultiplierScoreTimer();
     }
 
@@ -80,7 +77,7 @@ public class GameScreen : MonoBehaviour
         ui_PanelGameOver.gameObject.SetActive(true);
     }
 
-    public void ResetToStart()
+    public void ResetToInitState()
     {
         ChangeHealthAmount(-1);
         Ball.Instance.ResetPosition();
@@ -107,9 +104,9 @@ public class GameScreen : MonoBehaviour
     public void ChangeScore(float changeAmount)
     {
         _score += changeAmount * _scoreMultiplier;
-        ui_Score.fillAmount = _score / 10000f;
+        ui_Score.fillAmount = _score / _winScore;
 
-        if (_score >= 10000)
+        if (_score >= _winScore)
             GameOver();
     }
 

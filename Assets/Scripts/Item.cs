@@ -39,20 +39,7 @@ public class Item : MonoBehaviour
 	
 	private void Update () 
 	{
-	    //if(Input.GetKeyDown(KeyCode.Q))
-     //   {
-     //       MoveTo();
-     //   }
 
-     //   if (Input.GetKeyDown(KeyCode.W))
-     //   {
-     //       Fall();
-     //   }
-
-     //   if (Input.GetKeyDown(KeyCode.E))
-     //   {
-     //       GetScore();
-     //   }
     }
 
     public void OnBallHit()
@@ -76,7 +63,7 @@ public class Item : MonoBehaviour
                 GetScore();
                 break;
             case ItemType.SeaUrchin:
-                GameScreen.Instance.ResetToStart();
+                GameScreen.Instance.ResetToInitState();
                 Destroy();
                 break;
             case ItemType.Clock:
@@ -126,7 +113,6 @@ public class Item : MonoBehaviour
 
     public void Destroy()
     {
-        //FieldController.Instance.ItemIsDestroyed(_posInField);
         Destroy(gameObject);
     }
 
@@ -137,14 +123,10 @@ public class Item : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if(col.tag.Equals("Crab"))
+        if(col.tag.Equals(Tags.Crab))
         {
             switch (Type)
             {
-                //case ItemType.SeaUrchin:
-                //    GameScreen.Instance.ChangeHealthAmount(-1);
-                //    Destroy(gameObject);
-                //    break;
                 case ItemType.Clock:
                     GameScreen.Instance.ChangeTime(5);
                     Destroy(gameObject);
