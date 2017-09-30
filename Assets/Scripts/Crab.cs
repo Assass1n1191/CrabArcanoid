@@ -28,7 +28,8 @@ public class Crab : MonoBehaviour
 
         #if UNITY_EDITOR || UNITY_STANDALONE
         horizontal = Input.GetAxis("Horizontal") * _moveSpeed * Time.deltaTime;
-#elif UNITY_ANDROID
+
+        #elif UNITY_ANDROID
         if(Input.touchCount > 0)
         {
             Touch currentTouch = Input.touches[0];
@@ -38,8 +39,7 @@ public class Crab : MonoBehaviour
             else
                 horizontal = 1 * _moveSpeed * Time.deltaTime;
         }
-
-#endif
+        #endif
 
         if (transform.position.x > 4.5f && horizontal > 0f) horizontal = 0f;
         if (transform.position.x < -4.5f && horizontal < 0f) horizontal = 0f;
