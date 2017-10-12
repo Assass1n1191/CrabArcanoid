@@ -79,13 +79,13 @@ public class FieldController : MonoBehaviour
 
 
         //потом удалить
-        _spawnPointsRow.ForEach(x =>
-        {
+        //_spawnPointsRow.ForEach(x =>
+        //{
 
-            GameObject newBlock = Instantiate(Block1, transform);
-            newBlock.transform.localScale = new Vector3(.5f,.5f,.5f);
-            newBlock.transform.localPosition = x;
-        });
+        //    GameObject newBlock = Instantiate(Block1, transform);
+        //    newBlock.transform.localScale = new Vector3(.5f,.5f,.5f);
+        //    newBlock.transform.localPosition = x;
+        //});
     }
 
 
